@@ -6,8 +6,8 @@ public:
         vector<int> inDegree(numCourses,0);
         vector<vector<int>> adj(numCourses);
         for(auto & e: prerequisites){
-            adj[e[0]].push_back(e[1]);
-            inDegree[e[1]]++;
+            adj[e[1]].push_back(e[0]);
+            inDegree[e[0]]++;
         }
         for(int i=0;i<numCourses;i++){
             if(inDegree[i]==0) q.push(i);
