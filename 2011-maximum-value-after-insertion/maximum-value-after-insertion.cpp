@@ -12,7 +12,7 @@ public:
                 if((it-'0')<x) {temp.push_back (x);
                 used=1;}
             }
-            else if(flag && used==0){
+            if(flag && used==0){
                 if((it-'0')>x) {temp.push_back(x);
                 used=1;}
             }
