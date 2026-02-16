@@ -16,7 +16,7 @@ public:
                     original[i]=c;
                     if(st.find(original)!=st.end()){
                         q.push({original,len+1});
-                        st.erase(word);
+                        st.erase(original);
                     }
                 }
                 original=word;
