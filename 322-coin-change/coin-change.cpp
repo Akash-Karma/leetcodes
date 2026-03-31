@@ -20,24 +20,24 @@ private:
 public:
     int coinChange(vector<int>& coins, int amount) {
         if(amount==0) return 0;
-        vector<vector<int>> dp(coins.size(),vector<int>(amount+1,-1));
+        vector<int> prev(amount+1,0), curr(amount+1,0);
         for(int i=0;i<=amount;i++){
             if(i%coins[0]==0)
-            dp[0][i]=i/coins[0];
-            else dp[0][i]=1e7;
+            prev[i]=i/coins[0];
+            else prev[i]=1e7;
         }
         for(int i=1;i<coins.size();i++){
             for(int j=0;j<=amount;j++){
-                int notPick=0+dp[i-1][j];
+                int notPick=0+prev[j];
                 int pick=1e7;
                 if(j>=coins[i]){
-                    pick=1+dp[i][j-coins[i]];
+                    pick=1+curr[j-coins[i]];
                 }
-                dp[i][j]=min(pick,notPick);
+                curr[j]=min(pick,notPick);
             }
-            
+            prev=curr;
         }
-        if(dp[coins.size()-1][amount]>=1e7) return -1;
-        else return dp[coins.size()-1][amount];
+        if(prev[amount]>=1e7) return -1;
+        else return prev[amount];
     }
 };
