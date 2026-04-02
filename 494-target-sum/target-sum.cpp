@@ -28,7 +28,21 @@ public:
             if(i!=0) newNums.push_back(i);
         }
         if(newNums.size()==0) return (1<<zeros);
-        vector<vector<int>> dp(newNums.size(),vector<int>(target+1,-1));
-        return solve(newNums,target,newNums.size()-1,dp)*(1<<zeros);
+        vector<vector<int>> dp(newNums.size(),vector<int>(target+1,0));
+
+        dp[0][0]=1;
+        if(newNums[0]<=target)
+        dp[0][newNums[0]]=1;
+        for(int i=1;i<newNums.size();i++){
+            for(int j=0;j<=target;j++){
+                int notPick=dp[i-1][j];
+                int pick=0;
+                if(newNums[i]<=j) pick=dp[i-1][j-newNums[i]];
+                dp[i][j]=pick+notPick;
+            }
+        }
+
+
+        return dp[newNums.size()-1][target]*(1<<zeros);
     }
 };
