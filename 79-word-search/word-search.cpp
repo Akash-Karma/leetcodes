@@ -1,6 +1,6 @@
 class Solution {
 private:
-    bool solve(vector<vector<char>> &board, string &word, int idx, int i, int j, vector<vector<bool>> & vis, int di[], int dj[]){
+    bool solve(vector<vector<char>> &board, string &word, int idx, int i, int j, vector<vector<bool>> & vis, vector<int> &di, vector<int> &dj){
         if(i<0 || j<0  || i>=board.size() || j>=board[0].size() || vis[i][j] ||word[idx] != board[i][j]) return false;
         if(idx==word.size()-1) return true;
 
@@ -14,8 +14,8 @@ private:
 public:
     bool exist(vector<vector<char>>& board, string word) {
         vector<vector<bool>> vis(board.size(), vector<bool>(board[0].size(), 0));
-        int di[4] = {0,0,1,-1};
-        int dj[4] = {1,-1,0,0};
+        vector<int> di = {0,0,1,-1};
+        vector<int> dj = {1,-1,0,0};
         for(int i=0; i<board.size(); i++){
             for(int j=0; j<board[0].size(); j++){
                 if(!vis[i][j] && board[i][j] == word[0]){
