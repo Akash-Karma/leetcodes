@@ -1,26 +1,32 @@
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int> topoSort;
-        queue<int> q;
-        vector<int> inDegree(numCourses,0);
+        int topoSort = 0;
         vector<vector<int>> adj(numCourses);
-        for(auto & e: prerequisites){
-            adj[e[1]].push_back(e[0]);
-            inDegree[e[0]]++;
+        vector<int> inDegree(numCourses, 0);
+
+        for(auto it: prerequisites){
+            adj[it[0]].push_back(it[1]);
+            inDegree[it[1]]++;
         }
-        for(int i=0;i<numCourses;i++){
-            if(inDegree[i]==0) q.push(i);
-        }
-        while(!q.empty()){
-            int temp=q.front();
-            q.pop();
-            topoSort.push_back(temp);
-            for(auto &e:adj[temp]){
-                inDegree[e]--;
-                if(inDegree[e]==0) q.push(e);
+
+        queue<int> q;
+        for(int i=0; i<numCourses; i++){
+            if(inDegree[i] == 0){
+                q.push(i);
             }
         }
-        return topoSort.size()==numCourses;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            topoSort++;
+            for(auto it: adj[node]){
+                inDegree[it]--;
+                if(inDegree[it] == 0){
+                    q.push(it);
+                }
+            }
+        }
+        return numCourses == topoSort;
     }
 };
